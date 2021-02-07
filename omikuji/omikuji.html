@@ -1,0 +1,56 @@
+<!DOCTYPE html><html lang="jp"><head>
+	<meta charset="utf-8">
+	<style>
+		body {
+			background-image: url(iyatakashrine_s.jpg) ;
+		}
+		h2{
+			font-size: 30px;
+			background-color: #FFFFAA;
+		}
+
+		p{
+			font-size: 25px;
+			background-color: #FFFFAA;
+
+		}
+		button{
+			font-size: 1.4em;
+			font-weight: bold;
+			padding: 0px 0px;
+			border-style: none;
+		}
+
+	</style>
+<script>
+	function pickOne() {
+		var randNum = Math.random ();
+		let NUM_TYPE = 5;
+		return(Math.floor(randNum * NUM_TYPE));
+	}
+	function dicOmikuji(omval){
+		let strOm = ['大吉(だいきち)','中吉(ちゅうきち)','小吉(しょうきち)','吉(きち)','凶(きょう)'];
+		return(strOm[omval]);
+	}
+	function dicMess(omval){
+		let strOm = ['とてもよいことあるよ','まぁまぁよいことあるよ','すこしよいことあるよ','よいことあるよ','よいことあまりないかも'];
+		return(strOm[omval]);
+	}
+
+	function getomikji(){
+		let resultval=pickOne();
+		document.getElementById("omikuji").textContent = dicOmikuji(resultval);
+		document.getElementById("messres").textContent = dicMess(resultval);
+
+	}
+
+</script>
+</head>
+<body>
+	<center>
+		<button  onclick="getomikji()"><img src="omiBox.png"> おみくじ </button>
+		<h2 id = "omikuji"></h2>
+		<p id = "messres"></p>
+	</center>
+</body>
+</html>
