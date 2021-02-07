@@ -1,0 +1,165 @@
+<!DOCTYPE html><html lang="jp"><head>
+	<meta charset="utf-8">
+	<title>dzone horoscope</title>
+	<style>
+		body {
+			background-image: url(galaxy_by_pakutaso.jpg) ;
+		}
+		h2{
+			font-size: 30px;
+			background-color: #FFFFAA;
+		}
+
+		p{
+			font-size: 25px;
+			background-color: #FFFFAA;
+
+		}
+		button{
+			font-size: 1.2em;
+			font-weight: bold;
+			padding: 0px 0px;
+			border-style: none;
+		}
+
+	</style>
+<script>
+	//global
+	//let NUM_TYPE = 12;
+	let astrologicalType = ['おひつじ座','おうし座','ふたご座','かに座','しし座','おとめ座','てんびん座','さそり座','いて座','やぎ座','みずがめ座','うお座'];
+	let NUM_TYPE = astrologicalType.length;
+	let astrologicalStarts = ['3/21','4/20','5/21','6/22','7/23','8/23','9/23','10/24','11/23','12/22','1/20','2/19'];
+	let astrologicalEnds = ['4/19','5/20','6/21','7/22','8/22','9/22','10/23','11/22','12/21','1/19','2/18','3/20'];
+	let dicMessGood = ['とてもよいことあるよ','まぁまぁよいことあるよ','すこしよいことあるよ','ちょっとだけよいことあるよ','ほんのすこしだけよいことあるよ','ほんのちょっとだけよいことあるよ','ほんのちょっとだけよいことないよ','ほんのすこしだけよいことないよ','ちょっとだけよいことないよ','すこしよいことないよ','まぁまぁよいことないよ','とてもよいことないよ'];
+	let dicAdvice = ['まめ を たべると おなか が げんきになる 予感','やさい を たべると おなか が げんきになる 予感','ヨーグルト を たべると おなか が げんきになる 予感','あいさつ すると みんなと なかよし になる 予感','はやね すると あした げんきになる 予感','よく かんで たべると あたまが よくなる 予感','うんどう すると パワー が みなぎる 予感','はみがき すると むしば きん バイバイする 予感', 'おえかき すると え が じょうず になる 予感','うた を うたう と うた が じょうず になる 予感','じゃんぷ すると あし が じょうぶ になる 予感','さかだち すると うで が じょうぶ になる 予感','おてつだい すると かか と とと  が よろこぶ 予感'];
+	var aryRank2Astro = new Array(NUM_TYPE);
+	var aryAstro2Rank = new Array(NUM_TYPE);
+	var aryAstro2Advice = new Array(NUM_TYPE);
+	var strRankings = '';
+
+	function pickOne() {
+		
+		var indx =[];
+		for(var i = 0 ;i<NUM_TYPE;i++){
+			indx.push(i);
+		}
+		//var order =[];
+		for(var i = 0 ;i<NUM_TYPE;i++){
+			var j=Math.floor(Math.random()*(NUM_TYPE-i));
+			//order.push(indx[j]);
+			aryRank2Astro[i]=indx[j];
+			aryAstro2Rank[indx[j]]=i;
+			indx.splice(j,1);
+		}
+		//aryRank2Astro = order;
+		return;
+	}
+
+	function pickAdvice() {
+		var indx = new Array(NUM_TYPE);
+		for(var i = 0 ;i<NUM_TYPE;i++){
+			indx[i]=i;
+		}
+		for(var i = 0 ;i<NUM_TYPE;i++){
+			var j=Math.floor(Math.random()*(NUM_TYPE-i));
+			aryAstro2Advice[indx[j]]=i;
+			indx.splice(j,1);
+		}
+		return;
+	}
+
+	function sortAstro2Rank() {
+		for(var i=0;i<NUM_TYPE;i++){
+			for(var j=0;j<NUM_TYPE;j++){
+				if(i==aryRank2Astro[j]){
+					aryAstro2Rank[i] = j;
+					break;
+				}
+			}
+		}
+		return;
+	}
+
+	function funcastrologicalType(astval){
+		
+		return(astrologicalType[astval]);
+	}
+	function funcAstrologicalStarts(astval){
+		
+		return(astrologicalStarts[astval]);
+	}
+	function funcastrologicalEnds(astval){
+		
+		return(astrologicalEnds[astval]);
+	}
+
+	function dicMess(omval){
+		
+		return(dicMessGood[omval]);
+	}
+
+	function makeRankMess(){
+		for(var uilpA=0;uilpA<NUM_TYPE;uilpA++){
+			strRankings += (uilpA+1).toString()+'位：'+ astrologicalType[aryRank2Astro[uilpA]]+'  \n';
+		}
+
+	}
+
+	function getomikji(){
+		//let aryResult=pickOne();
+		//let aryResult=sortOrder2Rank();
+		strRankings='';
+		pickOne();
+		//sortAstro2Rank();
+		makeRankMess();
+		pickAdvice();
+		document.getElementById("omikuji").textContent = funcastrologicalType(aryRank2Astro[0]);
+		document.getElementById("ranklist").innerHTML = strRankings;
+		document.getElementById("advcres").innerHTML = dicAdvice[aryAstro2Advice[0]];
+	}
+
+	function getRank(valMyAstro){
+		//let aryResult=pickOne();
+		//let aryResult=sortOrder2Rank();
+		strRankings='';
+		pickOne();
+		//sortAstro2Rank();
+		makeRankMess();
+		pickAdvice();
+		document.getElementById("omikuji").textContent = astrologicalType[valMyAstro] +'は '+ (aryAstro2Rank[valMyAstro]+1).toString() +'位';
+		document.getElementById("ranklist").innerHTML = strRankings;
+		document.getElementById("advcres").innerHTML = dicAdvice[aryAstro2Advice[0]];
+	}
+	pickOne();
+	makeRankMess();
+	pickAdvice();
+
+</script>
+</head>
+<body>
+	<center>
+		
+		<button  onclick="getRank(0)" > <font size="20">♈</font> おひつじ座 3/21 - 4/19</button>
+		<button  onclick="getRank(1)"> <font size="20">♉</font> おうし座 4/20 - 5/20</button>
+		<button  onclick="getRank(2)"> <font size="20">♊</font> ふたご座 5/21 - 6/21</button>
+		<BR><BR>
+		<button  onclick="getRank(3)"> <font size="20">♋</font> かに座 6/22 - 7/22</button>
+		<button  onclick="getRank(4)"> <font size="20">♌</font> しし座 7/23 - 8/22</button>
+		<button  onclick="getRank(5)"> <font size="20">♍</font> おとめ座 8/23 - 9/22</button>
+		<BR><BR>
+		<button  onclick="getRank(6)"> <font size="20">♎</font> てんびん座 9/23 - 10/23</button>
+		<button  onclick="getRank(7)"> <font size="20">♏</font> さそり座 10/24 - 11/22</button>
+		<button  onclick="getRank(8)"> <font size="20">♐</font> いて座 11/23 - 12/21</button>
+		<BR><BR>
+		<button  onclick="getRank(9)"> <font size="20">♑</font> やぎ座 12/22 - 1/19</button>
+		<button  onclick="getRank(10)"> <font size="20">♒</font> みずがめ座 1/20 - 2/18</button>
+		<button  onclick="getRank(11)"> <font size="20">♓</font> うお座 2/19 - 3/20</button>
+		<BR><BR>
+
+		<h2 id = "omikuji"></h2>
+		<p id = "advcres"></p>
+		<BR><BR>
+		<p id = "ranklist"></p>
+	</center>
+</body>
+</html>
